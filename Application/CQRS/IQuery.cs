@@ -1,9 +1,8 @@
+using FluentResults;
 using MediatR;
 
 namespace Application.CQRS;
 
-
-public interface IQuery<out TResponse> : IRequest<TResponse> where TResponse : notnull
+public interface IQuery<TResponse> : IRequest<Result<TResponse>>
 {
-    
 }
