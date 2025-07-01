@@ -16,9 +16,11 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
+
         modelBuilder.Entity<User>(entity =>
         {
+            entity.HasKey(u => u.Id);
+
             entity.Property(u => u.FullName)
                 .HasMaxLength(100)
                 .IsRequired();
@@ -39,7 +41,7 @@ public class AppDbContext : DbContext
                 .HasMaxLength(20)
                 .IsRequired();
         });
-        
+
         modelBuilder.Entity<DailyTimeRecord>(entity =>
         {
             entity.HasKey(r => r.Id);
@@ -63,12 +65,5 @@ public class AppDbContext : DbContext
             entity.HasIndex(r => new { r.EmployeeId, r.Date })
                 .IsUnique();
         });
-
-
-        modelBuilder.Entity<User>()
-            .HasMany(u => u.TimeRecords)
-            .WithOne(tr => tr.Employee)
-            .HasForeignKey(tr => tr.EmployeeId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }
