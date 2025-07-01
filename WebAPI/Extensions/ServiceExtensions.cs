@@ -26,6 +26,7 @@ public static class ServiceExtensions
     public static WebApplicationBuilder AddCustomExecptionHanlder(this WebApplicationBuilder builder)
     {
         builder.Services.AddExceptionHandler<CustomExecptionHandler>();
+        builder.Services.AddProblemDetails();
         return builder;
     }
 

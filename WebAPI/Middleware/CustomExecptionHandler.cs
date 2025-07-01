@@ -1,5 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace WebAPI.Middleware;
 
@@ -18,6 +20,13 @@ public class CustomExecptionHandler
                 exception.Message,
                 exception.GetType().Name,
                 context.Response.StatusCode = StatusCodes.Status422UnprocessableEntity
+            ),
+            DbUpdateException dbEx when dbEx.InnerException is PostgresException pgEx &&
+                pgEx.SqlState == PostgresErrorCodes.UniqueViolation =>
+            (
+                $"Unique constraint violated: {pgEx.ConstraintName}.",
+                "Unique Constraint Violation",
+                StatusCodes.Status400BadRequest
             ),
             _ => 
             (
