@@ -14,7 +14,7 @@ public class CreateUserHandler
     {
         var user = new User
         {
-            FullName = request.Name,
+            FullName = request.FullName,
             Email = request.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
             Role = request.Role

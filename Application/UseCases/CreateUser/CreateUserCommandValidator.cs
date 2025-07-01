@@ -6,7 +6,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 {
     public CreateUserCommandValidator()
     {
-        RuleFor(x => x.Name)
+        RuleFor(x => x.FullName)
             .NotEmpty()
             .WithMessage("Name is required.")
             .MaximumLength(100)
