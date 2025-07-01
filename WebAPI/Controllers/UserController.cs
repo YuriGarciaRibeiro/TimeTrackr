@@ -1,3 +1,4 @@
+using Application.UseCases.GetUsers;
 using WebAPI.Extensions.ResultExtensions;
 
 namespace WebAPI.Controllers;
@@ -12,7 +13,7 @@ public class UserController : ControllerBase
     {
         _mediator = mediator;
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
     {
@@ -20,4 +21,11 @@ public class UserController : ControllerBase
         return result.ToActionResult();
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var query = new GetUserQuery();
+        var result = await _mediator.Send(query);
+        return result.ToActionResult();
+    }
 }
