@@ -30,6 +30,7 @@ app.UseHttpsRedirection();
 app.UseMiddlewares();
 
 app.MapControllers();
-app.UserMetrics();
+app.UserMetrics()
+    .UseEndpoints();
 
 app.Run();

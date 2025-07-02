@@ -1,13 +1,15 @@
 using FluentResults;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
-namespace WebAPI.Extensions.ResultExtensions;
+namespace WebApi.Extensions.ResultExtensions;
 
 public static class ResultExtensions
 {
-    public static IActionResult ToActionResult<T>(this Result<T> result)
+    public static IResult ToIResult<T>(this Result<T> result)
     {
         if (result.IsSuccess)
-            return new OkObjectResult(result.Value);
+            return Results.Ok(result.Value);
 
         var firstError = result.Errors.FirstOrDefault();
         var statusCode = firstError?.Metadata.TryGetValue("StatusCode", out var codeObj) == true && codeObj is int code
@@ -21,13 +23,13 @@ public static class ResultExtensions
             Detail = string.Join("; ", result.Errors.Select(e => e.Message))
         };
 
-        return new ObjectResult(problem) { StatusCode = statusCode };
+        return Results.Problem(problem.Detail, statusCode: statusCode, title: problem.Title);
     }
 
-    public static IActionResult ToActionResult(this Result result)
+    public static IResult ToIResult(this Result result)
     {
         if (result.IsSuccess)
-            return new NoContentResult();
+            return Results.NoContent();
 
         var firstError = result.Errors.FirstOrDefault();
         var statusCode = firstError?.Metadata.TryGetValue("StatusCode", out var codeObj) == true && codeObj is int code
@@ -41,6 +43,6 @@ public static class ResultExtensions
             Detail = string.Join("; ", result.Errors.Select(e => e.Message))
         };
 
-        return new ObjectResult(problem) { StatusCode = statusCode };
+        return Results.Problem(problem.Detail, statusCode: statusCode, title: problem.Title);
     }
 }
