@@ -1,9 +1,3 @@
-using Application.CQRS;
-using Core.Entities;
-using Core.Interfaces;
-using FluentResults;
-using MediatR;
-
 namespace Application.UseCases.CreateUser;
 
 public class CreateUserHandler

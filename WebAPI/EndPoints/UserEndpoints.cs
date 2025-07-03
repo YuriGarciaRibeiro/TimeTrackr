@@ -1,3 +1,4 @@
+using Application.UseCases.DeleteUser;
 using Application.UseCases.GetUsers;
 using Microsoft.AspNetCore.Builder;
 using WebApi.Extensions;
@@ -18,6 +19,10 @@ internal static class AccountEndpoints
         group.MapPost<CreateUserCommand, CreateUserResponse>("")
             .WithName("CreateUser")
             .WithSummary("Create a new user");
+
+        group.MapDelete<DeleteUserCommand>("")
+            .WithName("DeleteUser")
+            .WithSummary("Delete a user by ID");
 
         return app;
     }

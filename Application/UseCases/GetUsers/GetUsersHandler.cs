@@ -1,5 +1,3 @@
-using Core.Interfaces;
-
 namespace Application.UseCases.GetUsers;
 
 public class GetUsersHandler
