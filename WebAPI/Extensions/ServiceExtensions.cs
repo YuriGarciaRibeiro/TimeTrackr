@@ -1,4 +1,5 @@
 using Application.Behaviors;
+using Application.Services;
 using Core.Interfaces;
 using FluentValidation;
 using Infrastructure.Persistence;
@@ -12,7 +13,7 @@ public static class ServiceExtensions
 {
     public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder)
     {
-        // ADD YOUR SERVICES HERE
+        builder.Services.AddScoped<ITimeRecordService, TimeRecordService>();
         return builder;
     }
 
@@ -20,6 +21,7 @@ public static class ServiceExtensions
     {
         // ADD YOUR REPOSITORIES HERE
         builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IDailyTimeRecordRepository, DailyTimeRecordRepository>();
         return builder;
     }
     

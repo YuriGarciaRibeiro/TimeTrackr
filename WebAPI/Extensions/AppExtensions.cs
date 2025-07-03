@@ -1,4 +1,5 @@
 using Prometheus;
+using WebAPI.EndPoints;
 
 namespace WebAPI.Extensions;
 
@@ -18,7 +19,8 @@ public static class AppExtensions
     
     public static WebApplication UseEndpoints(this WebApplication app)
     {
-        app.MapUserEndpoints();
+        app.MapUserEndpoints()
+           .MapDailyTimeRecordEndpoints();
         return app;
     }
 }

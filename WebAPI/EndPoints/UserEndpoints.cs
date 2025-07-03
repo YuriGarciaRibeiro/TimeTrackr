@@ -1,7 +1,7 @@
 using Application.UseCases.DeleteUser;
 using Application.UseCases.GetUsers;
-using Microsoft.AspNetCore.Builder;
-using WebApi.Extensions;
+
+namespace WebAPI.EndPoints;
 
 internal static class AccountEndpoints
 {
