@@ -17,7 +17,6 @@ public class TimeRecordService : ITimeRecordService
 
         if (record == null)
         {
-            // 1ª marcação do dia
             await _repository.RegisterDailyTimeRecordAsync(userId, now, now.TimeOfDay);
             return Result.Ok().WithSuccess("Ponto registrado: entrada.");
         }

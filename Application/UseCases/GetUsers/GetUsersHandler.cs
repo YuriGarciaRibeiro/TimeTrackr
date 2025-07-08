@@ -17,16 +17,7 @@ public class GetUsersHandler
                 Id = user.Id,
                 FullName = user.FullName,
                 Email = user.Email,
-                Role = user.Role,
-                DailyTimeRecords = user.TimeRecords.Select(record => new DailyTimeRecordDto
-                {
-                    Id = record.Id,
-                    Date = record.Date,
-                    StartWork = record.StartWork,
-                    StartLunch = record.StartLunch,
-                    EndLunch = record.EndLunch,
-                    EndWork = record.EndWork
-                }).ToList()
+                Role = user.Role
             }).ToList()
         };
 

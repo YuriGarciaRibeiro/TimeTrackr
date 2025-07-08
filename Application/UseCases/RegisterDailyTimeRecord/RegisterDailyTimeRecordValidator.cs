@@ -8,9 +8,5 @@ public class RegisterDailyTimeRecordValidator : AbstractValidator<RegisterDailyT
     {
         RuleFor(x => x.UserId)
             .NotEmpty().WithMessage("UserId is required.");
-
-        RuleFor(x => x.Date)
-            .NotEmpty().WithMessage("Date is required.")
-            .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Date cannot be in the future.");
     }
 }

@@ -6,7 +6,7 @@ public class RegisterDailyTimeRecordHandler
 {
     public async Task<Result<RegisterDailyTimeRecordResponse>> Handle(RegisterDailyTimeRecordCommand request, CancellationToken cancellationToken)
     {
-        var result = await timeRecordService.RegisterTimeAsync(request.UserId, request.Date);
+        var result = await timeRecordService.RegisterTimeAsync(request.UserId, request.Date ?? DateTime.Now);
 
         if (result.IsFailed)
             return Result.Fail(result.Errors);

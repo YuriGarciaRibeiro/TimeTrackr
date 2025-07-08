@@ -25,16 +25,6 @@ public class DailyTimeRecordRepository : IDailyTimeRecordRepository
     {
         return await _dbContext.TimeRecords
             .Where(tr => tr.EmployeeId == userId)
-            .Select(tr => new DailyTimeRecord
-            {
-                Id = tr.Id,
-                EmployeeId = tr.EmployeeId,
-                Date = tr.Date,
-                StartWork = tr.StartWork,
-                StartLunch = tr.StartLunch,
-                EndLunch = tr.EndLunch,
-                EndWork = tr.EndWork
-            })
             .ToListAsync();
     }
 
