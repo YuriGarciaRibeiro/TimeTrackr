@@ -14,6 +14,26 @@ public static class RouteGroupBuilderExtensions
             .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 
+    /// <summary>
+    /// GET *com* parâmetros de rota — basta passar bindRouteValues=true
+    /// </summary>
+    public static RouteHandlerBuilder MapGet<TRequest, TResponse>(
+        this RouteGroupBuilder group,
+        [StringSyntax("Route")] string pattern,
+        bool bindRouteValues)
+        where TRequest : IRequest<Result<TResponse>>, new()
+    {
+        var handler = bindRouteValues
+            ? (Delegate)DefaultGetWithRouteValues<TRequest, TResponse>
+            : (Delegate)DefaultGetBehavior<TRequest, TResponse>;
+
+        return group
+            .MapGet(pattern, handler)
+            .Produces<TResponse>()
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .ProducesProblem(StatusCodes.Status500InternalServerError);
+    }
+
     public static RouteHandlerBuilder MapPost<TRequest, TResponse>(
         this RouteGroupBuilder group,
         [StringSyntax("Route")] string pattern = "",
@@ -74,13 +94,37 @@ public static class RouteGroupBuilderExtensions
         var response = await sender.Send(request, cancellationToken);
         return response.ToIResult();
     }
-    
+
     private static async Task<IResult> DefaultGetBehavior<TRequest, TResponse>(
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
         where TRequest : IRequest<Result<TResponse>>, new()
     {
         var request = new TRequest();
+        var response = await sender.Send(request, cancellationToken);
+        return response.ToIResult();
+    }
+    
+    private static async Task<IResult> DefaultGetWithRouteValues<TRequest, TResponse>(
+        [FromRoute] RouteValueDictionary routeValues,
+        [FromServices] ISender sender,
+        CancellationToken cancellationToken)
+        where TRequest : IRequest<Result<TResponse>>, new()
+    {
+        var request = new TRequest();
+        var props = typeof(TRequest).GetProperties()
+            .Where(p => p.CanWrite);
+
+        foreach (var prop in props)
+        {
+            if (routeValues.TryGetValue(prop.Name, out var raw) && raw is not null)
+            {
+                // Converte o tipo (ex: string -> Guid, int, etc.)
+                var converted = Convert.ChangeType(raw, prop.PropertyType);
+                prop.SetValue(request, converted);
+            }
+        }
+
         var response = await sender.Send(request, cancellationToken);
         return response.ToIResult();
     }

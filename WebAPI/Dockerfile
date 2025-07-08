@@ -2,6 +2,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
+ENV TZ=America/Sao_Paulo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Copia tudo e restaura dependências
 COPY ["WebAPI/WebAPI.csproj", "WebAPI/"]
 COPY ["Application/Application.csproj", "Application/"]

@@ -11,6 +11,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=TimeTrackerDB;Username=postgres;Password=postgres
+      - TZ=America/Sao_Paulo
     depends_on:
       - db
 

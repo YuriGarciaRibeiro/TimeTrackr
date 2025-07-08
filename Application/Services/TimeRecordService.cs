@@ -18,10 +18,9 @@ public class TimeRecordService : ITimeRecordService
         if (record == null)
         {
             await _repository.RegisterDailyTimeRecordAsync(userId, now, now.TimeOfDay);
-            return Result.Ok().WithSuccess("Ponto registrado: entrada.");
+            return Result.Ok().WithSuccess("Time registered: start of work.");
         }
 
-        // Decide o próximo campo a preencher:
         if (record.StartWork == null)
         {
             record.StartWork = TimeOnly.FromDateTime(now);
@@ -40,10 +39,10 @@ public class TimeRecordService : ITimeRecordService
         }
         else
         {
-            return Result.Fail("Todas as marcações de ponto para hoje já foram registradas.");
+            return Result.Fail("All time records for today have already been completed.");
         }
 
         await _repository.SaveChangesAsync();
-        return Result.Ok().WithSuccess("Ponto registrado com sucesso.");
+        return Result.Ok().WithSuccess("Time successfully recorded.");
     }
 }

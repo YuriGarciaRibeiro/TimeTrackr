@@ -17,6 +17,7 @@ public class DailyTimeRecordRepository : IDailyTimeRecordRepository
     public async Task<bool> DailyTimeRecordExistsAsync(Guid userId, DateTime date)
     {
         var record = await _dbContext.TimeRecords
+            .AsNoTracking()
             .FirstOrDefaultAsync(tr => tr.EmployeeId == userId && tr.Date == DateOnly.FromDateTime(date));
         return record != null;   
     }
@@ -28,9 +29,31 @@ public class DailyTimeRecordRepository : IDailyTimeRecordRepository
             .ToListAsync();
     }
 
-    public Task<TimeSpan> GetTotalTimeForUserAsync(Guid userId)
+    public async Task<TimeSpan> GetTotalTimeForUserAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        var today = DateTime.Now;
+        var startOfMonth = new DateOnly(today.Year, today.Month, 1);
+
+        var records = await _dbContext.TimeRecords
+            .Where(tr => tr.EmployeeId == userId
+                        && tr.Date >= startOfMonth
+                        && tr.StartWork.HasValue
+                        && tr.EndWork.HasValue)
+            .ToListAsync();
+
+        TimeSpan totalWorked = TimeSpan.Zero;
+
+        foreach (var record in records)
+        {
+            var workDuration = record.EndWork!.Value - record.StartWork!.Value;
+            var lunchDuration = (record.StartLunch.HasValue && record.EndLunch.HasValue)
+                ? record.EndLunch.Value - record.StartLunch.Value
+                : TimeSpan.Zero;
+
+            totalWorked += (workDuration - lunchDuration);
+        }
+
+        return totalWorked;
     }
 
     public Task RegisterDailyTimeRecordAsync(Guid userId, DateTime date, TimeSpan time)

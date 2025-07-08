@@ -1,5 +1,6 @@
 using Application.UseCases.DeleteUser;
 using Application.UseCases.GetUsers;
+using WebApi.Extensions;
 
 namespace WebAPI.EndPoints;
 
@@ -11,7 +12,7 @@ internal static class AccountEndpoints
         var group = app.MapGroup("Users") // removido "v{version:apiVersion}/" se não estiver usando versionamento
             .WithTags("User")
             .WithOpenApi();
-
+            
         group.MapGet<GetUserQuery, GetUsersResponse>("")
             .WithName("GetUsers")
             .WithSummary("Get all users");
