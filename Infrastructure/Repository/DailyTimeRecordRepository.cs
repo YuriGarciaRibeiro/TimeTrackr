@@ -1,8 +1,4 @@
-using Core.Entities;
-using Core.Interfaces;
-using Microsoft.EntityFrameworkCore;
-
-namespace Infrastructure.Persistence;
+namespace Infrastructure.Repository;
 
 public class DailyTimeRecordRepository : IDailyTimeRecordRepository
 {

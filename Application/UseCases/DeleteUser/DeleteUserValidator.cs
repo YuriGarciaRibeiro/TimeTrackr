@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Application.UseCases.DeleteUser;
 
 public class DeleteUserValidator : AbstractValidator<DeleteUserCommand>

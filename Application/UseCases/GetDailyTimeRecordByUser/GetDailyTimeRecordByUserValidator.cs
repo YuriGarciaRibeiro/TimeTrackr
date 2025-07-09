@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Application.UseCases.GetDailyTimeRecordByUser;
 
 public class GetDailyTimeRecordByUserValidator : AbstractValidator<GetDailyTimeRecordByUserQuery>

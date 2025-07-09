@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Application.UseCases.RegisterDailyTimeRecord;
 
 public class RegisterDailyTimeRecordValidator : AbstractValidator<RegisterDailyTimeRecordCommand>

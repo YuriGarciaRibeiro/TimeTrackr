@@ -1,5 +1,3 @@
-using FluentResults;
-
 namespace Core.Errors;
 
 public class NotFoundError : Error

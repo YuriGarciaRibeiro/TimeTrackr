@@ -3,6 +3,7 @@ using Application.Services;
 using Core.Interfaces;
 using FluentValidation;
 using Infrastructure.Persistence;
+using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Middleware;
 

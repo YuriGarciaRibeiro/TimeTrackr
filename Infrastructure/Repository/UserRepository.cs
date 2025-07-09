@@ -2,9 +2,10 @@ using Core.Entities;
 using Core.Errors;
 using Core.Interfaces;
 using FluentResults;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence;
+namespace Infrastructure.Repository;
 
 public class UserRepository : IUserRepository
 {

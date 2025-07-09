@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace Application.UseCases.CreateUser;
 
 public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>

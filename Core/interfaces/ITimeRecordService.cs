@@ -1,5 +1,3 @@
-using FluentResults;
-
 namespace Core.Interfaces;
 
 public interface ITimeRecordService

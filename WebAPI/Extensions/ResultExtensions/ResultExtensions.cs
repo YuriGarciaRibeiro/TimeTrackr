@@ -1,7 +1,3 @@
-using FluentResults;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
 namespace WebApi.Extensions.ResultExtensions;
 
 public static class ResultExtensions

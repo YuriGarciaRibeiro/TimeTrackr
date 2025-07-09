@@ -1,5 +1,4 @@
 using Core.Entities;
-using FluentResults;
 
 namespace Core.Interfaces;
 
